@@ -1,18 +1,14 @@
-from transformers import MarianTokenizer, MarianMTModel
+from transformers import MarianTokenizer
 import ctranslate2
 from pathlib import Path
+
 # 加载模型和分词器
 ct2_model_dir = "./ct2_model_en_zh"
 model_name = "Helsinki-NLP/opus-mt-en-zh"
 tokenizer = MarianTokenizer.from_pretrained(model_name)
 if not Path(ct2_model_dir).exists():
     print("正在下载并转换模型...")
-    # 加载 HuggingFace 模型和分词器
-    tokenizer = MarianTokenizer.from_pretrained(model_name)
-    model = MarianMTModel.from_pretrained(model_name)
-
-    # 创建 TransformersConverter 实例并转换模型
-    converter = ctranslate2.converters.TransformersConverter(model, tokenizer)
+    converter = ctranslate2.converters.TransformersConverter(model_name)
     converter.convert(ct2_model_dir)
     print(f"模型已保存至 {ct2_model_dir}")
 translator = ctranslate2.Translator(ct2_model_dir, device="cpu")
