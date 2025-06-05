@@ -5,6 +5,7 @@ import argparse
 # 下载nltk的数据文件，用于句子分割
 print("nltk开始下载punkt")
 nltk.download('punkt')
+nltk.download('punkt_tab')
 def transcribe_and_segment_to_json(audio_path, output_json_path):
     # 初始化模型
     model = WhisperModel("tiny", device="cpu", compute_type="int8")
